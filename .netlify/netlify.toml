@@ -1,0 +1,25 @@
+plugins = []
+headers = []
+redirects = []
+
+[functions]
+
+[functions."*"]
+
+[build]
+publish = "C:\\Users\\Janani R\\Desktop\\blog-v2-project\\blog-v2\\client"
+publishOrigin = "default"
+
+[build.environment]
+
+[build.processing]
+
+[build.processing.css]
+skip_processing = true
+[build.processing.html]
+
+[build.processing.images]
+
+[build.processing.js]
+
+[build.services]
