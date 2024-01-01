@@ -1,10 +1,11 @@
 "use client";
 import Link from "next/link";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import axios from "axios";
 import { useRouter } from "next/navigation";
 import { useAuthContext } from "../Context/AuthContext";
 import { toast } from "react-toastify";
+import { redirect } from "next/navigation";
 const Signup = () => {
   const router = useRouter();
 
@@ -17,6 +18,7 @@ const Signup = () => {
     setPassword,
     confirmPassword,
     setConfirmPassword,
+    setUserEmail,
   } = useAuthContext();
 
   const checkPasswordField = () => {
@@ -30,6 +32,7 @@ const Signup = () => {
       return;
     }
     axios
+      // .post(`http://localhost:3001/Users`, {
       .post(`https://tame-pink-pike-sock.cyclic.app/Users`, {
         userName,
         email,
@@ -49,6 +52,14 @@ const Signup = () => {
         }
       });
   };
+
+  useEffect(() => {
+    const storedUserEmail = localStorage.getItem("userEmail");
+    if (storedUserEmail) {
+      setUserEmail(storedUserEmail);
+      redirect("/");
+    }
+  }, []);
 
   return (
     <section

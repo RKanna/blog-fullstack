@@ -1,24 +1,27 @@
 "use client";
 import Link from "next/link";
 import { useState, useEffect } from "react";
-import { useRouter } from "next/navigation";
+import { useRouter, redirect } from "next/navigation";
 import axios from "axios";
 import { useAuthContext } from "../Context/AuthContext";
 import { toast } from "react-toastify";
 
 const Login = () => {
-  const { email, setEmail, password, setPassword, updateUserEmail } =
-    useAuthContext();
+  const {
+    email,
+    setEmail,
+    password,
+    setPassword,
+    updateUserEmail,
+    setUserEmail,
+  } = useAuthContext();
   const router = useRouter();
 
   const handleSubmit = (e) => {
     e.preventDefault();
     axios
       // .post(`http://localhost:3001/login`, { email, password })
-      .post(`https://tame-pink-pike-sock.cyclic.app/login`, {
-        email,
-        password,
-      })
+      .post(`https://tame-pink-pike-sock.cyclic.app/login`, { email, password })
       .then((result) => {
         console.log(result);
         if (result.data === "success") {
@@ -33,6 +36,14 @@ const Login = () => {
       })
       .catch((err) => console.log(err));
   };
+
+  useEffect(() => {
+    const storedUserEmail = localStorage.getItem("userEmail");
+    if (storedUserEmail) {
+      setUserEmail(storedUserEmail);
+      redirect("/");
+    }
+  }, []);
 
   return (
     <section

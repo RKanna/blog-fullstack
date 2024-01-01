@@ -6,9 +6,12 @@ import { redirect } from "next/navigation";
 import { toast } from "react-toastify";
 
 const CreateBlog = () => {
-  const { userEmail } = useAuthContext();
+  const { setUserEmail } = useAuthContext();
   useLayoutEffect(() => {
-    if (!userEmail) {
+    const storedUserEmail = localStorage.getItem("userEmail");
+    if (storedUserEmail) {
+      setUserEmail(storedUserEmail);
+    } else {
       toast("Login Required");
       redirect("/Login");
     }

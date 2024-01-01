@@ -1,8 +1,16 @@
 "use client";
 import Link from "next/link";
 import { useAuthContext } from "../Context/AuthContext";
+import { useEffect } from "react";
 const Header = () => {
-  const { userEmail, handleLogout } = useAuthContext();
+  const { userEmail, handleLogout, setUserEmail } = useAuthContext();
+
+  useEffect(() => {
+    const storedUserEmail = localStorage.getItem("userEmail");
+    if (storedUserEmail) {
+      setUserEmail(storedUserEmail);
+    }
+  }, []);
 
   return (
     <section className="w-full h-6rem flex justify-between items-center bg-blue-50 pl-3 pr-3 lg:pl-[10rem] lg:pr-[10rem] mb-10">
