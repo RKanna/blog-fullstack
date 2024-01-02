@@ -4,6 +4,7 @@ import { useLayoutEffect, useEffect } from "react";
 import { useAuthContext } from "../Context/AuthContext";
 import { redirect } from "next/navigation";
 import { toast } from "react-toastify";
+import { useBlogContext } from "../Context/BlogContext";
 
 const CreateBlog = () => {
   const { setUserEmail } = useAuthContext();
@@ -17,9 +18,34 @@ const CreateBlog = () => {
     }
   }, []);
 
+  const { title, setTitle, content, setContent } = useBlogContext();
+
+  const createBlogHandleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      const response = await fetch("http://localhost:3001/api/v1/blogs", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ title, content }),
+      });
+      const result = await response.json();
+
+      console.log(result);
+      if (result.message === "Blog posted") {
+        toast("Blog Posted Successfully");
+        setContent("");
+        setTitle("");
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <section className="w-full min-h-screen mx-auto sm:w-3/4 md:w-1/2 lg:w-1/2">
-      <form action="" className="p-5">
+      <form action="" className="p-5" onSubmit={createBlogHandleSubmit}>
         <h1 className="mb-3 text-2xl text-center">Create Blog</h1>
         <div className="mb-5">
           <label
@@ -34,6 +60,8 @@ const CreateBlog = () => {
             className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
             placeholder="Title"
             required
+            onChange={(e) => setTitle(e.target.value)}
+            value={title}
           />
         </div>
         <div className="mb-5">
@@ -51,6 +79,8 @@ const CreateBlog = () => {
             rows="10"
             placeholder="Blog Content"
             required
+            onChange={(e) => setContent(e.target.value)}
+            value={content}
           ></textarea>
         </div>
         <div className="mb-5">
@@ -65,7 +95,7 @@ const CreateBlog = () => {
             id="author"
             className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
             placeholder="Author"
-            required
+            // required
           />
         </div>
         <div className="mb-5">
@@ -80,7 +110,7 @@ const CreateBlog = () => {
             id="tags"
             className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white h-[5rem] dark:focus:ring-blue-500 dark:focus:border-blue-500"
             placeholder="Tags Separated by coma"
-            required
+            // required
           />
         </div>
         <div className="mb-5">
@@ -95,7 +125,7 @@ const CreateBlog = () => {
             id="cover-image"
             className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
             placeholder="Tags Separated by coma"
-            required
+            // required
           />
         </div>
         {/* <div className="flex items-start mb-5">
