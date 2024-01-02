@@ -17,24 +17,61 @@ const Login = () => {
   } = useAuthContext();
   const router = useRouter();
 
-  const handleSubmit = (e) => {
+  // const handleSubmit = (e) => {
+  //   e.preventDefault();
+  //   axios
+  //     // .post(`http://localhost:3001/login`, { email, password })
+  //     .post(`https://tame-pink-pike-sock.cyclic.app/login`, { email, password })
+  //     .then((result) => {
+  //       console.log(result);
+  //       if (result.data === "success") {
+  //         updateUserEmail(email);
+  //         router.push("/");
+  //         toast("Login Success");
+  //       } else if (result.data === "The password is incorrect") {
+  //         window.alert("Password is incorrect");
+  //       } else if (result.data === "The Email is not Registered with us") {
+  //         window.alert("Email is Not Registered");
+  //       }
+  //     })
+  //     .catch((err) => console.log(err));
+  // };
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    axios
-      // .post(`http://localhost:3001/login`, { email, password })
-      .post(`https://tame-pink-pike-sock.cyclic.app/login`, { email, password })
-      .then((result) => {
-        console.log(result);
-        if (result.data === "success") {
-          updateUserEmail(email);
-          router.push("/");
-          toast("Login Success");
-        } else if (result.data === "The password is incorrect") {
-          window.alert("Password is incorrect");
-        } else if (result.data === "The Email is not Registered with us") {
-          window.alert("Email is Not Registered");
+
+    try {
+      const response = await fetch(
+        "https://tame-pink-pike-sock.cyclic.app/login",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ email, password }),
         }
-      })
-      .catch((err) => console.log(err));
+      );
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+      }
+
+      const result = await response.json();
+
+      console.log(result);
+
+      if (result === "success") {
+        updateUserEmail(email);
+        router.push("/");
+        toast("Login Success");
+      } else if (result === "The password is incorrect") {
+        window.alert("Password is incorrect");
+      } else if (result === "The Email is not Registered with us") {
+        window.alert("Email is Not Registered");
+      }
+    } catch (err) {
+      console.error("Fetch error:", err);
+    }
   };
 
   useEffect(() => {
@@ -64,7 +101,7 @@ const Login = () => {
             id="email"
             name="email"
             className="mb-5 sm:w-full md:w-full lg:w-[20rem] lg:h-[3.5rem] bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-            placeholder="name@flowbite.com"
+            placeholder="name@example.com"
             required
             onChange={(e) => setEmail(e.target.value)}
           />
@@ -82,6 +119,7 @@ const Login = () => {
             name="password"
             className="sm:w-full md:w-full lg:w-[20rem] lg:h-[3.5rem] bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
             required
+            placeholder="password"
             onChange={(e) => setPassword(e.target.value)}
           />
         </div>

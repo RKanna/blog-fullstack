@@ -25,32 +25,59 @@ const Signup = () => {
     return password === confirmPassword;
   };
 
-  const handleSubmit = (e) => {
+  // const handleSubmit = (e) => {
+  //   e.preventDefault();
+  //   if (!checkPasswordField()) {
+  //     console.log("Passwords do not match");
+  //     return;
+  //   }
+  //   axios
+  //     // .post(`http://localhost:3001/Users`, {
+  //     .post(`https://tame-pink-pike-sock.cyclic.app/Users`, {
+  //       userName,
+  //       email,
+  //       password,
+  //     })
+  //     .then((result) => {
+  //       console.log(result);
+  //       if (result.data.message === "Signup success") {
+  //         router.push("/Login");
+  //         toast("Register Success");
+  //       }
+  //     })
+  //     .catch((err) => {
+  //       console.log(err.response.data);
+  //       if (err.response.data === "Email already exists") {
+  //         window.alert("Email already Exists");
+  //       }
+  //     });
+  // };
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!checkPasswordField()) {
-      console.log("Passwords do not match");
-      return;
+    try {
+      const response = await fetch(
+        "https://tame-pink-pike-sock.cyclic.app/Users",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ userName, email, password }),
+        }
+      );
+      const result = await response.json();
+
+      console.log(result);
+      if (result.message === "Signup success") {
+        router.push("/Login");
+        toast("Register Success");
+      } else if (result === "Email already exists") {
+        window.alert("Email Already in use");
+      }
+    } catch (error) {
+      console.log(error);
     }
-    axios
-      // .post(`http://localhost:3001/Users`, {
-      .post(`https://tame-pink-pike-sock.cyclic.app/Users`, {
-        userName,
-        email,
-        password,
-      })
-      .then((result) => {
-        console.log(result);
-        if (result.data.message === "Signup success") {
-          router.push("/Login");
-          toast("Register Success");
-        }
-      })
-      .catch((err) => {
-        console.log(err.response.data);
-        if (err.response.data === "Email already exists") {
-          window.alert("Email already Exists");
-        }
-      });
   };
 
   useEffect(() => {
