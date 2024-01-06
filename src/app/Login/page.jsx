@@ -5,6 +5,7 @@ import { useRouter, redirect } from "next/navigation";
 import axios from "axios";
 import { useAuthContext } from "../Context/AuthContext";
 import { toast } from "react-toastify";
+import bcrypt from "bcryptjs-react";
 
 const Login = () => {
   const {
@@ -14,6 +15,7 @@ const Login = () => {
     setPassword,
     updateUserEmail,
     setUserEmail,
+    encryptedPassword,
   } = useAuthContext();
   const router = useRouter();
 
@@ -42,7 +44,8 @@ const Login = () => {
 
     try {
       const response = await fetch(
-        "https://tame-pink-pike-sock.cyclic.app/login",
+        // "https://tame-pink-pike-sock.cyclic.app/login",
+        "http://localhost:3001/login",
         {
           method: "POST",
           headers: {
@@ -61,6 +64,10 @@ const Login = () => {
       console.log(result);
 
       if (result === "success") {
+        // const matchPassword = await bcrypt.compare(
+        //   password,
+        //   result.encryptedPassword
+        // );
         updateUserEmail(email);
         router.push("/");
         toast("Login Success");

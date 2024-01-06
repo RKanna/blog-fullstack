@@ -10,6 +10,7 @@ export const AuthProvider = ({ children }) => {
   const [password, setPassword] = useState();
   const [confirmPassword, setConfirmPassword] = useState();
   const [userEmail, setUserEmail] = useState();
+  const [encryptedPassword, setEncryptedPassword] = useState();
   const router = useRouter();
 
   // useEffect(() => {
@@ -46,6 +47,8 @@ export const AuthProvider = ({ children }) => {
         setUserEmail,
         updateUserEmail,
         handleLogout,
+        encryptedPassword,
+        setEncryptedPassword,
       }}
     >
       {children}

@@ -1,12 +1,14 @@
 "use client";
 
 import { AuthProvider } from "./AuthContext";
-import { BlogProvider } from "./BlogContext";
+import BlogContext from "./BlogContext";
 
 export function Providers({ children }) {
   return (
     <AuthProvider>
-      <BlogProvider>{children}</BlogProvider>
+      {/* <BlogProvider> */}
+      <BlogContext>{children}</BlogContext>
+      {/* </BlogProvider> */}
     </AuthProvider>
   );
 }

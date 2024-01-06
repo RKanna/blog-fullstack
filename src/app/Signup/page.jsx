@@ -6,6 +6,7 @@ import { useRouter } from "next/navigation";
 import { useAuthContext } from "../Context/AuthContext";
 import { toast } from "react-toastify";
 import { redirect } from "next/navigation";
+import bcrypt from "bcryptjs-react";
 const Signup = () => {
   const router = useRouter();
 
@@ -19,51 +20,33 @@ const Signup = () => {
     confirmPassword,
     setConfirmPassword,
     setUserEmail,
+    encryptedPassword,
+    setEncryptedPassword,
   } = useAuthContext();
 
   const checkPasswordField = () => {
     return password === confirmPassword;
   };
 
-  // const handleSubmit = (e) => {
-  //   e.preventDefault();
-  //   if (!checkPasswordField()) {
-  //     console.log("Passwords do not match");
-  //     return;
-  //   }
-  //   axios
-  //     // .post(`http://localhost:3001/Users`, {
-  //     .post(`https://tame-pink-pike-sock.cyclic.app/Users`, {
-  //       userName,
-  //       email,
-  //       password,
-  //     })
-  //     .then((result) => {
-  //       console.log(result);
-  //       if (result.data.message === "Signup success") {
-  //         router.push("/Login");
-  //         toast("Register Success");
-  //       }
-  //     })
-  //     .catch((err) => {
-  //       console.log(err.response.data);
-  //       if (err.response.data === "Email already exists") {
-  //         window.alert("Email already Exists");
-  //       }
-  //     });
-  // };
-
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
+      // const encrypt = await bcrypt.hash(password, 10);
+      // setEncryptedPassword(encrypt);
+
       const response = await fetch(
-        "https://tame-pink-pike-sock.cyclic.app/Users",
+        // "https://tame-pink-pike-sock.cyclic.app/Users",
+        "http://localhost:3001/Users",
         {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
           },
-          body: JSON.stringify({ userName, email, password }),
+          body: JSON.stringify({
+            userName,
+            email,
+            password,
+          }),
         }
       );
       const result = await response.json();
@@ -109,7 +92,7 @@ const Signup = () => {
             placeholder="Username"
             required
             onChange={(e) => setUserName(e.target.value)}
-            name="username"
+            name="userName"
           />
         </div>
         <div className="mb-5 ">

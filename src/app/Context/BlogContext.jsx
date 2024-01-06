@@ -1,57 +1,41 @@
-// import {
-//   createContext,
-//   useContext,
-//   useReducer,
-//   useEffect,
-//   useState,
-// } from "react";
-// import blogReducer from "./BlogReducer";
-// import axios from "axios";
+import blogReducer from "./blogReducer";
+import { createContext, useContext, useReducer, useEffect } from "react";
+import axios from "axios";
 
-// const Blog = createContext();
+const Blog = createContext();
 
-// const BlogContext = ({ children }) => {
-//   useEffect(() => {
-//     axios.get("http://localhost:5000/api/v1/blog").then((res) => {
-//       dispatch({ type: "FETCH_INIT", payload: res.data });
-//     });
-//   }, []);
+const BlogContext = ({ children }) => {
+  // useEffect(() => {
+  //   axios.get("http://localhost:3001/api/v1/blogs").then((res) => {
+  //     dispatch({ type: "FETCH_INIT", payload: res.data });
+  //   });
+  // }, []);
 
-//   const [state, dispatch] = useReducer(blogReducer, {});
-//   //   console.log(state);
-//   return <Blog.Provider value={{ state, dispatch }}>{children}</Blog.Provider>;
-// };
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await fetch("http://localhost:3001/api/v1/blogs");
+        if (!response.ok) {
+          throw new Error(`HTTP error! Status: ${response.status}`);
+        }
 
-// export const BlogState = () => {
-//   return useContext(Blog);
-// };
+        const data = await response.json();
+        dispatch({ type: "FETCH_INIT", payload: data });
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
 
-// export default BlogContext;
+    fetchData();
+  }, []);
 
-//////////////////////////////////////////////////
-
-import { createContext, useContext, useState, useEffect } from "react";
-
-const BlogContext = createContext();
-
-export const BlogProvider = ({ children }) => {
-  const [title, setTitle] = useState("");
-  const [content, setContent] = useState("");
-
-  return (
-    <BlogContext.Provider
-      value={{
-        title,
-        setTitle,
-        content,
-        setContent,
-      }}
-    >
-      {children}
-    </BlogContext.Provider>
-  );
+  const [state, dispatch] = useReducer(blogReducer, []);
+  // console.log(state);
+  return <Blog.Provider value={{ state, dispatch }}>{children}</Blog.Provider>;
 };
 
-export const useBlogContext = () => {
-  return useContext(BlogContext);
+export const BlogState = () => {
+  return useContext(Blog);
 };
+
+export default BlogContext;
