@@ -25,6 +25,29 @@ export const AuthProvider = ({ children }) => {
     setUserEmail(newEmail);
   };
 
+  const updateUserName = async (newName) => {
+    try {
+      const response = await fetch(
+        `http://localhost:3001/api/v1/users?email=${email}`
+      );
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+      }
+
+      const userData = await response.json();
+
+      if (userData && userData.userName) {
+        localStorage.setItem("userName", userData.userName);
+        setUserName(userData.userName);
+      } else {
+        console.error("User not found or missing userName in response");
+      }
+    } catch (error) {
+      console.error("Fetch error:", error);
+    }
+  };
+
   const handleLogout = () => {
     localStorage.removeItem("userEmail");
     setUserEmail(null);
@@ -49,6 +72,7 @@ export const AuthProvider = ({ children }) => {
         handleLogout,
         encryptedPassword,
         setEncryptedPassword,
+        updateUserName,
       }}
     >
       {children}

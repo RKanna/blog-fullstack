@@ -1,32 +1,14 @@
-import blogReducer from "./blogReducer";
 import { createContext, useContext, useReducer, useEffect } from "react";
+import blogReducer from "./blogReducer";
 import axios from "axios";
 
 const Blog = createContext();
 
 const BlogContext = ({ children }) => {
-  // useEffect(() => {
-  //   axios.get("http://localhost:3001/api/v1/blogs").then((res) => {
-  //     dispatch({ type: "FETCH_INIT", payload: res.data });
-  //   });
-  // }, []);
-
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await fetch("http://localhost:3001/api/v1/blogs");
-        if (!response.ok) {
-          throw new Error(`HTTP error! Status: ${response.status}`);
-        }
-
-        const data = await response.json();
-        dispatch({ type: "FETCH_INIT", payload: data });
-      } catch (error) {
-        console.error("Error fetching data:", error);
-      }
-    };
-
-    fetchData();
+    axios.get("http://localhost:3001/api/v1/blogs").then((res) => {
+      dispatch({ type: "FETCH_INIT", payload: res.data });
+    });
   }, []);
 
   const [state, dispatch] = useReducer(blogReducer, []);
@@ -37,5 +19,6 @@ const BlogContext = ({ children }) => {
 export const BlogState = () => {
   return useContext(Blog);
 };
+
 
 export default BlogContext;

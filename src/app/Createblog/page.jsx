@@ -17,12 +17,26 @@ const CreateBlog = () => {
   });
 
   const { dispatch } = BlogState();
-  const handleSubmit = (e) => {
+  // const handleSubmit = (e) => {
+  //   e.preventDefault();
+  //   console.log(createPost);
+  //   dispatch({ type: "CREATE_BLOG", payload: createPost });
+  //   window.alert("Post created successfully");
+  //   window.location.href = "/";
+  // };
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(createPost);
-    dispatch({ type: "CREATE_BLOG", payload: createPost });
-    window.alert("Post created successfully");
-    // window.location.href = "/";
+
+    try {
+      console.log(createPost);
+      await dispatch({ type: "CREATE_BLOG", payload: createPost });
+      window.alert("Post created successfully");
+      // window.location.href = "/";
+    } catch (error) {
+      console.error("Error creating blog:", error);
+      window.alert("Failed to create the blog post");
+    }
   };
 
   return (

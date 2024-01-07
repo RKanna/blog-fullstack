@@ -10,12 +10,14 @@ import bcrypt from "bcryptjs-react";
 const Login = () => {
   const {
     email,
+    userName,
     setEmail,
     password,
     setPassword,
     updateUserEmail,
     setUserEmail,
     encryptedPassword,
+    updateUserName,
   } = useAuthContext();
   const router = useRouter();
 
@@ -68,7 +70,10 @@ const Login = () => {
         //   password,
         //   result.encryptedPassword
         // );
+
         updateUserEmail(email);
+        updateUserName(userName);
+
         router.push("/");
         toast("Login Success");
       } else if (result === "The password is incorrect") {

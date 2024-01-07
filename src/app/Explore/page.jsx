@@ -6,20 +6,26 @@ import Link from "next/link";
 const Explore = () => {
   const { state } = BlogState();
 
+  const sortedBlogs = state.sort(
+    (a, b) => new Date(a.datePublished) - new Date(b.datePublished)
+  );
+
   return (
     <section className="min-h-screen p-5">
-      <h2 className="text-center">Blog List</h2>
+      <h2 className="text-4xl text-center">Older Blogs</h2>
       <ul className="flex flex-col items-center justify-center mx-auto sm:w-3/4 md:w-3/4 lg:w-3/4">
-        {state.map((blog) => (
+        {sortedBlogs.map((blog) => (
           <Link
-            href={`/${blog._id}`}
-            // href="/[blogId]/"
-            // as={`/${blog._id}/`}
+            // href={`/${blog._id}`}
+            href={{
+              pathname: `/${blog._id}`,
+              query: { id: blog._id },
+            }}
             key={blog._id}
-            className="p-10 mt-5 overflow-hidden bg-blue-200 rounded-lg cursor-pointer max-h-60 overflow-ellipsis"
+            className="p-10 mt-5 overflow-hidden bg-blue-200 rounded-lg cursor-pointer overflow-ellipsis"
           >
             <h3 className="pb-5 text-4xl">{blog.title}</h3>
-            <p className="text-justify ">{blog.content}</p>
+            <p className="text-justify ">{blog.shortDescription}</p>
           </Link>
         ))}
       </ul>
