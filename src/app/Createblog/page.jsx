@@ -2,37 +2,55 @@
 import React from "react";
 import FileBase64 from "react-file-base64";
 import { BlogState } from "../Context/BlogContext";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useRouter } from "next/navigation";
+import { useAuthContext } from "../Context/AuthContext";
 
 const CreateBlog = () => {
+  const router = useRouter();
+
+  const [profileId, setProfileId] = useState(null);
+
+  const { userName } = useAuthContext();
+
+  useEffect(() => {
+    const getProfileId = localStorage.getItem("userId");
+    setProfileId(getProfileId);
+    if (getProfileId) {
+      router.push("/Createblog");
+    } else {
+      router.push("/");
+    }
+  }, []);
+
   const [createPost, setCreatePost] = useState({
     title: "",
     content: "",
     datePublished: new Date().toISOString(),
-    author: "",
+    author: userName,
     tags: "",
     image: "",
-    comments: "",
+    // comments: "",
     likes: 0,
+    userId: localStorage.getItem("userId"),
   });
 
   const { dispatch } = BlogState();
-  // const handleSubmit = (e) => {
-  //   e.preventDefault();
-  //   console.log(createPost);
-  //   dispatch({ type: "CREATE_BLOG", payload: createPost });
-  //   window.alert("Post created successfully");
-  //   window.location.href = "/";
-  // };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     try {
+      const userId = localStorage.getItem("userId");
+      setCreatePost({
+        ...createPost,
+        userId: userId,
+      });
+
       console.log(createPost);
       await dispatch({ type: "CREATE_BLOG", payload: createPost });
       window.alert("Post created successfully");
-      // window.location.href = "/";
+      window.location.href = "/";
     } catch (error) {
       console.error("Error creating blog:", error);
       window.alert("Failed to create the blog post");
@@ -40,7 +58,8 @@ const CreateBlog = () => {
   };
 
   return (
-    <section className="w-full min-h-screen mx-auto sm:w-3/4 md:w-1/2 lg:w-1/2">
+    // <section className="w-full min-h-screen mx-auto mt-10 mb-10 sm:w-3/4 md:w-1/2 lg:w-1/2">
+    <section className="mx-auto lg:w-3/4">
       <form action="" className="p-5">
         <h1 className="mb-3 text-2xl text-center">Create Blog</h1>
         <div className="mb-5">
@@ -53,7 +72,7 @@ const CreateBlog = () => {
           <input
             type="text"
             id="title"
-            className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+            className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 lg:text-2xl"
             placeholder="Title"
             required
             onChange={(e) =>
@@ -71,7 +90,7 @@ const CreateBlog = () => {
           </label>
           <textarea
             id="content"
-            className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+            className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 lg:text-2xl"
             name=""
             cols="30"
             rows="10"
@@ -93,12 +112,19 @@ const CreateBlog = () => {
           <input
             type="text"
             id="author"
-            className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+            className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 lg:text-2xl"
             placeholder="Author"
+            // onChange={(e) =>
+            //   setCreatePost({ ...createPost, author: e.target.value })
+            // }
+            // value={createPost.author}
             onChange={(e) =>
-              setCreatePost({ ...createPost, author: e.target.value })
+              setCreatePost({
+                ...createPost,
+                author: userName,
+              })
             }
-            value={createPost.author}
+            value={userName}
           />
         </div>
         <div className="mb-5">
@@ -111,7 +137,7 @@ const CreateBlog = () => {
           <input
             type="text"
             id="tags"
-            className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white h-[5rem] dark:focus:ring-blue-500 dark:focus:border-blue-500"
+            className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white h-[5rem] dark:focus:ring-blue-500 dark:focus:border-blue-500 lg:text-2xl"
             placeholder="Tags Separated by coma"
             onChange={(e) =>
               setCreatePost({ ...createPost, tags: e.target.value.split(",") })
@@ -133,7 +159,7 @@ const CreateBlog = () => {
             type="file"
             name="image"
             value={createPost.image}
-            className="form-control"
+            className="form-control lg:text-2xl"
             onDone={({ base64 }) => {
               // console.log(base64);
               setCreatePost({ ...createPost, image: base64 });
@@ -141,7 +167,7 @@ const CreateBlog = () => {
           />
         </div>
 
-        <div className="mb-5">
+        {/* <div className="mb-5">
           <label
             htmlFor="likes"
             className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-900"
@@ -151,7 +177,7 @@ const CreateBlog = () => {
           <input
             type="number"
             id="likes"
-            className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white h-[5rem] dark:focus:ring-blue-500 dark:focus:border-blue-500"
+            className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white h-[5rem] dark:focus:ring-blue-500 dark:focus:border-blue-500 lg:text-2xl"
             placeholder="likes"
             onChange={(e) =>
               setCreatePost({ ...createPost, likes: +e.target.value })
@@ -160,8 +186,8 @@ const CreateBlog = () => {
             name="tags"
             // required
           />
-        </div>
-        <div className="mb-5">
+        </div> */}
+        {/* <div className="mb-5">
           <label
             htmlFor="comments"
             className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-900"
@@ -174,7 +200,7 @@ const CreateBlog = () => {
             id="comments"
             cols="30"
             rows="10"
-            className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white h-[5rem] dark:focus:ring-blue-500 dark:focus:border-blue-500"
+            className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white h-[5rem] dark:focus:ring-blue-500 dark:focus:border-blue-500 lg:text-2xl"
             placeholder="comments"
             value={createPost.comments[0]?.text || ""}
             onChange={(e) =>
@@ -190,7 +216,7 @@ const CreateBlog = () => {
               })
             }
           ></textarea>
-        </div>
+        </div> */}
 
         <button
           type="submit"

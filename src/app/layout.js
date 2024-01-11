@@ -20,7 +20,7 @@ export default function RootLayout({ children }) {
         <Providers>
           <Header />
           <ToastContainer />
-          <main>{children}</main>
+          <main className="bg-black">{children}</main>
           <Footer />
         </Providers>
       </body>

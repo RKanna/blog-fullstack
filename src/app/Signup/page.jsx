@@ -31,9 +31,6 @@ const Signup = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      // const encrypt = await bcrypt.hash(password, 10);
-      // setEncryptedPassword(encrypt);
-
       const response = await fetch(
         // "https://tame-pink-pike-sock.cyclic.app/Users",
         "http://localhost:3001/Users",

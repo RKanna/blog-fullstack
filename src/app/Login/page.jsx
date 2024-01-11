@@ -8,88 +8,13 @@ import { toast } from "react-toastify";
 import bcrypt from "bcryptjs-react";
 
 const Login = () => {
-  const {
-    email,
-    userName,
-    setEmail,
-    password,
-    setPassword,
-    updateUserEmail,
-    setUserEmail,
-    encryptedPassword,
-    updateUserName,
-  } = useAuthContext();
+  const { setEmail, setPassword, handleSignIn, setUserId } = useAuthContext();
   const router = useRouter();
 
-  // const handleSubmit = (e) => {
-  //   e.preventDefault();
-  //   axios
-  //     // .post(`http://localhost:3001/login`, { email, password })
-  //     .post(`https://tame-pink-pike-sock.cyclic.app/login`, { email, password })
-  //     .then((result) => {
-  //       console.log(result);
-  //       if (result.data === "success") {
-  //         updateUserEmail(email);
-  //         router.push("/");
-  //         toast("Login Success");
-  //       } else if (result.data === "The password is incorrect") {
-  //         window.alert("Password is incorrect");
-  //       } else if (result.data === "The Email is not Registered with us") {
-  //         window.alert("Email is Not Registered");
-  //       }
-  //     })
-  //     .catch((err) => console.log(err));
-  // };
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-
-    try {
-      const response = await fetch(
-        // "https://tame-pink-pike-sock.cyclic.app/login",
-        "http://localhost:3001/login",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({ email, password }),
-        }
-      );
-
-      if (!response.ok) {
-        throw new Error(`HTTP error! Status: ${response.status}`);
-      }
-
-      const result = await response.json();
-
-      console.log(result);
-
-      if (result === "success") {
-        // const matchPassword = await bcrypt.compare(
-        //   password,
-        //   result.encryptedPassword
-        // );
-
-        updateUserEmail(email);
-        updateUserName(userName);
-
-        router.push("/");
-        toast("Login Success");
-      } else if (result === "The password is incorrect") {
-        window.alert("Password is incorrect");
-      } else if (result === "The Email is not Registered with us") {
-        window.alert("Email is Not Registered");
-      }
-    } catch (err) {
-      console.error("Fetch error:", err);
-    }
-  };
-
   useEffect(() => {
-    const storedUserEmail = localStorage.getItem("userEmail");
-    if (storedUserEmail) {
-      setUserEmail(storedUserEmail);
+    const storedUserId = localStorage.getItem("userId");
+    if (storedUserId) {
+      setUserId(storedUserId);
       redirect("/");
     }
   }, []);
@@ -99,7 +24,7 @@ const Login = () => {
       className="flex items-center justify-center min-h-screen"
       style={{ minHeight: "calc(100vh - 11rem)" }}
     >
-      <form className="max-w-sm mx-auto" onSubmit={handleSubmit}>
+      <form className="max-w-sm mx-auto" onSubmit={handleSignIn}>
         <h1 className="mb-6 text-2xl text-center">Sign In</h1>
         <div className="mb-5 ">
           <label

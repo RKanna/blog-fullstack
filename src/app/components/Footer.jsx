@@ -2,7 +2,7 @@ const Footer = () => {
   const currentDate = new Date();
   const fullYear = currentDate.getFullYear();
   return (
-    <section className="mt-10">
+    <section className="">
       <div className=" w-full h-[3rem] bg-blue-500 flex items-center justify-center gap-3">
         <a href="#!" role="button">
           <svg
