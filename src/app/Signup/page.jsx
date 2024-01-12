@@ -32,7 +32,7 @@ const Signup = () => {
     e.preventDefault();
     try {
       const response = await fetch(
-        "https://13.60.12.79:3001/Users",
+        "https://blog-api-host-iskq.onrender.com/Users",
         // "http://localhost:3001/Users",
         {
           method: "POST",

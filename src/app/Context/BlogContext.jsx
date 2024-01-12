@@ -9,9 +9,7 @@ const BlogContext = ({ children }) => {
   useEffect(() => {
     // axios.get("http://localhost:3001/api/v1/blogs").then((res) => {
     axios
-      .get(
-        "http://ec2-13-60-12-79.eu-north-1.compute.amazonaws.com:3001/api/v1/blogs"
-      )
+      .get("https://blog-api-host-iskq.onrender.com/api/v1/blogs")
       .then((res) => {
         dispatch({ type: "FETCH_INIT", payload: res.data });
       });
