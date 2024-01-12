@@ -32,7 +32,7 @@ const Signup = () => {
     e.preventDefault();
     try {
       const response = await fetch(
-        "https://tame-pink-pike-sock.cyclic.app/Users",
+        "http://13.60.12.79:3001/Users",
         // "http://localhost:3001/Users",
         {
           method: "POST",

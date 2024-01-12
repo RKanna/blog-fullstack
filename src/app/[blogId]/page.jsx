@@ -74,7 +74,7 @@ const DetailedBlog = () => {
 
       const response = await fetch(
         // `http://localhost:3001/api/v1/blogs/${specificBlog?.data?._id}/comments`,
-        `https://tame-pink-pike-sock.cyclic.app/api/v1/blogs/${specificBlog?.data?._id}/comments`,
+        `http://13.60.12.79:3001/api/v1/blogs/${specificBlog?.data?._id}/comments`,
         {
           method: "POST",
           headers: {
@@ -163,7 +163,7 @@ const DetailedBlog = () => {
     try {
       const response = await fetch(
         // `http://localhost:3001/api/v1/blogs/${specificBlog?.data?._id}/comments/${commentId}`,
-        `https://tame-pink-pike-sock.cyclic.app/api/v1/blogs/${specificBlog?.data?._id}/comments/${commentId}`,
+        `http://13.60.12.79:3001/api/v1/blogs/${specificBlog?.data?._id}/comments/${commentId}`,
         {
           method: "DELETE",
           headers: {

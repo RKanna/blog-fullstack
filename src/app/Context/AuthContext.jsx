@@ -36,16 +36,13 @@ export const AuthProvider = ({ children }) => {
 
     try {
       // const response = await fetch("http://localhost:3001/login", {
-      const response = await fetch(
-        "https://tame-pink-pike-sock.cyclic.app/login",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({ email, password }),
-        }
-      );
+      const response = await fetch("http://13.60.12.79:3001/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ email, password }),
+      });
 
       if (!response.ok) {
         throw new Error(`HTTP error! Status: ${response.status}`);
@@ -82,7 +79,7 @@ export const AuthProvider = ({ children }) => {
     try {
       const response = await fetch(
         // `http://localhost:3001/api/v1/users/${userId}`
-        `https://tame-pink-pike-sock.cyclic.app/api/v1/users/${userId}`
+        `http://13.60.12.79:3001/api/v1/users/${userId}`
       );
       const result = await response.json();
 

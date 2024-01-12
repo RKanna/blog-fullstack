@@ -1,9 +1,7 @@
 "use client";
 export const getBlogByID = async (id) => {
   // const res = await fetch(`http://localhost:3001/api/v1/blogs/${id}`);
-  const res = await fetch(
-    `https://tame-pink-pike-sock.cyclic.app/api/v1/blogs/${id}`
-  );
+  const res = await fetch(`http://13.60.12.79:3001/api/v1/blogs/${id}`);
   const data = await res.json();
   console.log(data);
   return data;
@@ -11,12 +9,9 @@ export const getBlogByID = async (id) => {
 
 export const deleteBlogById = async (id) => {
   // const res = await fetch(`http://localhost:3001/api/v1/blogs/${id}`, {
-  const res = await fetch(
-    `https://tame-pink-pike-sock.cyclic.app/api/v1/blogs/${id}`,
-    {
-      method: "DELETE",
-    }
-  );
+  const res = await fetch(`http://13.60.12.79:3001/api/v1/blogs/${id}`, {
+    method: "DELETE",
+  });
   if (!res.ok) {
     const errorData = await res.json();
     console.error("Error deleting blog:", errorData);
@@ -33,7 +28,7 @@ export const updateCommentById = async (blogId, commentId, updatedData) => {
   try {
     const response = await fetch(
       // `http://localhost:3001/api/v1/blogs/${blogId}/comments/${commentId}`,
-      `https://tame-pink-pike-sock.cyclic.app/api/v1/blogs/${blogId}/comments/${commentId}`,
+      `http://13.60.12.79:3001/api/v1/blogs/${blogId}/comments/${commentId}`,
       {
         method: "PUT",
         headers: {
@@ -53,7 +48,7 @@ export const updateLikesById = async (blogId, newLikes) => {
   try {
     const response = await fetch(
       // `http://localhost:3001/api/v1/blogs/${blogId}/likes`,
-      `https://tame-pink-pike-sock.cyclic.app/api/v1/blogs/${blogId}/likes`,
+      `http://13.60.12.79:3001/api/v1/blogs/${blogId}/likes`,
       {
         method: "PUT",
         headers: {

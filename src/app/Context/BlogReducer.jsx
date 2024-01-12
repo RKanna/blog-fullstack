@@ -7,15 +7,12 @@ const blogReducer = (state, action) => {
       return action.payload.data;
     case "CREATE_BLOG":
       // axios.post("http://localhost:3001/api/v1/blogs", action.payload);
-      axios.post(
-        "https://tame-pink-pike-sock.cyclic.app/api/v1/blogs",
-        action.payload
-      );
+      axios.post("http://13.60.12.79:3001/api/v1/blogs", action.payload);
       return [...state, action.payload];
     case "UPDATE_BLOG":
       axios.put(
         // `http://localhost:3001/api/v1/blogs/${action.payload._id}`,
-        `https://tame-pink-pike-sock.cyclic.app/api/v1/blogs/${action.payload._id}`,
+        `http://13.60.12.79:3001/api/v1/blogs/${action.payload._id}`,
         action.payload
       );
       return state.map((blog) =>
@@ -23,9 +20,7 @@ const blogReducer = (state, action) => {
       );
     case "DELETE_BLOG":
       // axios.delete(`http://localhost:3001/api/v1/blogs/${action.payload}`);
-      axios.delete(
-        `https://tame-pink-pike-sock.cyclic.app/api/v1/blogs/${action.payload}`
-      );
+      axios.delete(`http://13.60.12.79:3001/api/v1/blogs/${action.payload}`);
       return state.filter((blog) => blog._id !== action.payload);
 
     case "ADD_COMMENT":

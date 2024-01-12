@@ -8,11 +8,9 @@ const BlogContext = ({ children }) => {
   const [state, dispatch] = useReducer(blogReducer, []);
   useEffect(() => {
     // axios.get("http://localhost:3001/api/v1/blogs").then((res) => {
-    axios
-      .get("https://tame-pink-pike-sock.cyclic.app/api/v1/blogs")
-      .then((res) => {
-        dispatch({ type: "FETCH_INIT", payload: res.data });
-      });
+    axios.get("http://13.60.12.79:3001/api/v1/blogs").then((res) => {
+      dispatch({ type: "FETCH_INIT", payload: res.data });
+    });
   }, []);
 
   // useEffect(() => {
