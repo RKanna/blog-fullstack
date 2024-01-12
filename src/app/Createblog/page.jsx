@@ -5,6 +5,7 @@ import { BlogState } from "../Context/BlogContext";
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { useAuthContext } from "../Context/AuthContext";
+import { getProfileIdFromLocalStorage } from "./LocalStorageGet";
 
 const CreateBlog = () => {
   const router = useRouter();
@@ -13,9 +14,19 @@ const CreateBlog = () => {
 
   const { userName } = useAuthContext();
 
-  useEffect(() => {
-    const getProfileId = localStorage.getItem("userId");
+  // useEffect(() => {
+  //   const getProfileId = localStorage.getItem("userId");
 
+  //   setProfileId(getProfileId);
+  //   if (getProfileId) {
+  //     router.push("/Createblog");
+  //   } else {
+  //     router.push("/");
+  //   }
+  // }, []);
+
+  useEffect(() => {
+    const getProfileId = getProfileIdFromLocalStorage();
     setProfileId(getProfileId);
     if (getProfileId) {
       router.push("/Createblog");
@@ -33,7 +44,9 @@ const CreateBlog = () => {
     image: "",
     // comments: "",
     likes: 0,
-    userId: localStorage.getItem("userId"),
+    // userId: localStorage.getItem("userId"),
+    userId:
+      typeof window !== "undefined" ? localStorage.getItem("userId") : null,
   });
 
   const { dispatch } = BlogState();
@@ -63,7 +76,7 @@ const CreateBlog = () => {
 
     try {
       if (typeof window !== "undefined") {
-        const userId = localStorage.getItem("userId");
+        const userId = getProfileIdFromLocalStorage();
         setCreatePost({
           ...createPost,
           userId: userId,
