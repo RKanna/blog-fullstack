@@ -9,30 +9,18 @@ import { useAuthContext } from "../Context/AuthContext";
 const CreateBlog = () => {
   const router = useRouter();
 
-  const [profileId, setProfileId] = useState(null);
+  const [profileId, setProfileId] = useState("");
 
   const { userName } = useAuthContext();
 
-  // useEffect(() => {
-  //   const getProfileId = localStorage.getItem("userId");
-
-  //   setProfileId(getProfileId);
-  //   if (getProfileId) {
-  //     router.push("/Createblog");
-  //   } else {
-  //     router.push("/");
-  //   }
-  // }, []);
-
   useEffect(() => {
-    if (typeof window !== "undefined") {
-      const getProfileId = localStorage.getItem("userId");
-      setProfileId(getProfileId);
-      if (getProfileId) {
-        router.push("/Createblog");
-      } else {
-        router.push("/");
-      }
+    const getProfileId = localStorage.getItem("userId");
+
+    setProfileId(getProfileId);
+    if (getProfileId) {
+      router.push("/Createblog");
+    } else {
+      router.push("/");
     }
   }, []);
 
@@ -50,20 +38,42 @@ const CreateBlog = () => {
 
   const { dispatch } = BlogState();
 
+  // const handleSubmit = async (e) => {
+  //   e.preventDefault();
+
+  //   try {
+  //     const userId = localStorage.getItem("userId");
+  //     setCreatePost({
+  //       ...createPost,
+  //       userId: userId,
+  //     });
+
+  //     console.log(createPost);
+  //     await dispatch({ type: "CREATE_BLOG", payload: createPost });
+  //     window.alert("Post created successfully");
+  //     window.location.href = "/";
+  //   } catch (error) {
+  //     console.error("Error creating blog:", error);
+  //     window.alert("Failed to create the blog post");
+  //   }
+  // };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     try {
-      const userId = localStorage.getItem("userId");
-      setCreatePost({
-        ...createPost,
-        userId: userId,
-      });
+      if (typeof window !== "undefined") {
+        const userId = localStorage.getItem("userId");
+        setCreatePost({
+          ...createPost,
+          userId: userId,
+        });
 
-      console.log(createPost);
-      await dispatch({ type: "CREATE_BLOG", payload: createPost });
-      window.alert("Post created successfully");
-      window.location.href = "/";
+        console.log(createPost);
+        await dispatch({ type: "CREATE_BLOG", payload: createPost });
+        window.alert("Post created successfully");
+        router.push("/"); // Use router.push instead of window.location.href
+      }
     } catch (error) {
       console.error("Error creating blog:", error);
       window.alert("Failed to create the blog post");
