@@ -9,7 +9,7 @@ import { useAuthContext } from "../Context/AuthContext";
 const CreateBlog = () => {
   const router = useRouter();
 
-  // const [profileId, setProfileId] = useState(null);
+  const [profileId, setProfileId] = useState(null);
 
   const { userName } = useAuthContext();
 
@@ -27,7 +27,7 @@ const CreateBlog = () => {
   useEffect(() => {
     if (typeof window !== "undefined") {
       const getProfileId = localStorage.getItem("userId");
-      // setProfileId(getProfileId);
+      setProfileId(getProfileId);
       if (getProfileId) {
         router.push("/Createblog");
       } else {
