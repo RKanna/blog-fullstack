@@ -94,7 +94,7 @@ export const AuthProvider = ({ children }) => {
         console.error("Error fetching user:", result.message);
       }
     } catch (error) {
-      console.error("Fetch error:", error);
+      // console.error("Fetch error:", error);
     }
   };
   fetchUserName(userId);

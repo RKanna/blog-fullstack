@@ -9,17 +9,30 @@ import { useAuthContext } from "../Context/AuthContext";
 const CreateBlog = () => {
   const router = useRouter();
 
-  const [profileId, setProfileId] = useState(null);
+  // const [profileId, setProfileId] = useState(null);
 
   const { userName } = useAuthContext();
 
+  // useEffect(() => {
+  //   const getProfileId = localStorage.getItem("userId");
+
+  //   setProfileId(getProfileId);
+  //   if (getProfileId) {
+  //     router.push("/Createblog");
+  //   } else {
+  //     router.push("/");
+  //   }
+  // }, []);
+
   useEffect(() => {
-    const getProfileId = localStorage.getItem("userId");
-    setProfileId(getProfileId);
-    if (getProfileId) {
-      router.push("/Createblog");
-    } else {
-      router.push("/");
+    if (typeof window !== "undefined") {
+      const getProfileId = localStorage.getItem("userId");
+      // setProfileId(getProfileId);
+      if (getProfileId) {
+        router.push("/Createblog");
+      } else {
+        router.push("/");
+      }
     }
   }, []);
 
