@@ -36,7 +36,7 @@ export const AuthProvider = ({ children }) => {
 
     try {
       // const response = await fetch("http://localhost:3001/login", {
-      const response = await fetch("http://13.60.12.79:3001/login", {
+      const response = await fetch("https://13.60.12.79:3001/login", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -79,7 +79,7 @@ export const AuthProvider = ({ children }) => {
     try {
       const response = await fetch(
         // `http://localhost:3001/api/v1/users/${userId}`
-        `http://13.60.12.79:3001/api/v1/users/${userId}`
+        `https://13.60.12.79:3001/api/v1/users/${userId}`
       );
       const result = await response.json();
 
