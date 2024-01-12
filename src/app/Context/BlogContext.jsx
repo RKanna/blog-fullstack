@@ -8,9 +8,13 @@ const BlogContext = ({ children }) => {
   const [state, dispatch] = useReducer(blogReducer, []);
   useEffect(() => {
     // axios.get("http://localhost:3001/api/v1/blogs").then((res) => {
-    axios.get("https://13.60.12.79:3001/api/v1/blogs").then((res) => {
-      dispatch({ type: "FETCH_INIT", payload: res.data });
-    });
+    axios
+      .get(
+        "http://ec2-13-60-12-79.eu-north-1.compute.amazonaws.com:3001/api/v1/blogs"
+      )
+      .then((res) => {
+        dispatch({ type: "FETCH_INIT", payload: res.data });
+      });
   }, []);
 
   // useEffect(() => {
