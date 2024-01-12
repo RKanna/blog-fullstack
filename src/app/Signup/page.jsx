@@ -32,8 +32,8 @@ const Signup = () => {
     e.preventDefault();
     try {
       const response = await fetch(
-        // "https://tame-pink-pike-sock.cyclic.app/Users",
-        "http://localhost:3001/Users",
+        "https://tame-pink-pike-sock.cyclic.app/Users",
+        // "http://localhost:3001/Users",
         {
           method: "POST",
           headers: {

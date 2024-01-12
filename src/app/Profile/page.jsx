@@ -155,7 +155,10 @@ const Profile = () => {
   const uploadImage = async () => {
     try {
       // Fetch the user by userName to get the ID
-      const userResponse = await fetch(`/api/v1/users?userName=${userName}`);
+      // const userResponse = await fetch(`/api/v1/users?userName=${userName}`);
+      const userResponse = await fetch(
+        `https://tame-pink-pike-sock.cyclic.app/api/v1/users?userName=${userName}`
+      );
       const userData = await userResponse.json();
 
       if (userData.success && userData.data) {
