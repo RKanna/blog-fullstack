@@ -10,9 +10,10 @@ import { getProfileIdFromLocalStorage } from "../Createblog/LocalStorageGet";
 const Filter = () => {
   const { userId, userName } = useAuthContext();
   const { state } = BlogState();
-  //   const localStorageUserId = localStorage.getItem("userId");
+  const localStorageUserId =
+    typeof window !== "undefined" ? getProfileIdFromLocalStorage() : null;
 
-  if (userId !== getProfileIdFromLocalStorage()) {
+  if (userId !== localStorageUserId) {
     return (
       <div className="w-full min-h-screen text-white">
         You do not have permission to view these blogs.
