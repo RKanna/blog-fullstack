@@ -73,15 +73,15 @@ const CreateBlog = () => {
 
         // First, send a request to create the new blog post
         await axios.post(
-          "https://blog-api-host-iskq.onrender.com/api/v1/blogs",
-          // "http://localhost:3001/api/v1/blogs",
+          // "https://blog-api-host-iskq.onrender.com/api/v1/blogs",
+          "http://localhost:3001/api/v1/blogs",
           createPost
         );
 
         // After successfully creating the blog post, fetch the updated list of blogs
         const response = await axios.get(
-          "https://blog-api-host-iskq.onrender.com/api/v1/blogs"
-          // "http://localhost:3001/api/v1/blogs"
+          // "https://blog-api-host-iskq.onrender.com/api/v1/blogs"
+          "http://localhost:3001/api/v1/blogs"
         );
 
         // Dispatch the updated list of blogs to the context

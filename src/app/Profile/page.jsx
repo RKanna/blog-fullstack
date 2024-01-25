@@ -74,8 +74,8 @@ const Profile = () => {
   const handleUpdateProfile = async () => {
     try {
       const response = await fetch(
-        // `http://localhost:3001/api/v1/users/${userId}`,
-        `https://blog-api-host-iskq.onrender.com/api/v1/users/${userId}`,
+        `http://localhost:3001/api/v1/users/${userId}`,
+        // `https://blog-api-host-iskq.onrender.com/api/v1/users/${userId}`,
         {
           method: "PUT",
           headers: {

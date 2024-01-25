@@ -24,44 +24,90 @@ const Signup = () => {
     encryptedPassword,
     setEncryptedPassword,
     phoneNumber,
-    profilePhoto,
-    address,
-    city,
-    state,
-    setAddress,
-    setCity,
-    setState,
     setPhoneNumber,
+    profilePhoto,
     setProfilePhoto,
+    address,
+    setAddress,
+    city,
+    setCity,
+    state,
+    setState,
   } = useAuthContext();
 
   const checkPasswordField = () => {
     return password === confirmPassword;
   };
 
+  const handleInputChange = (e) => {
+    const { name, value } = e.target || e;
+
+    // Update the corresponding state based on the input field name
+    switch (name) {
+      case "userName":
+        setUserName(value);
+        break;
+      case "email":
+        setEmail(value);
+        break;
+      case "password":
+        setPassword(value);
+        break;
+      case "confirmPassword":
+        setConfirmPassword(value);
+        break;
+      case "userEmail":
+        setUserEmail(value);
+        break;
+      case "encryptedPassword":
+        setEncryptedPassword(value);
+        break;
+      case "phoneNumber":
+        setPhoneNumber(value);
+        break;
+      case "profilePhoto":
+        setProfilePhoto(value);
+        break;
+      case "address":
+        setAddress(value);
+        break;
+      case "city":
+        setCity(value);
+        break;
+      case "state":
+        setState(value);
+        break;
+      case "profilePhoto":
+        setProfilePhoto(value);
+        break;
+      default:
+        // Handle other cases if needed
+        break;
+    }
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      // const response = await fetch("http://localhost:3001/Users", {
-      const response = await fetch(
-        `https://blog-api-host-iskq.onrender.com/Users`,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            userName,
-            email,
-            password,
-            address,
-            city,
-            state,
-            phoneNumber,
-            profilePhoto,
-          }),
-        }
-      );
+      const response = await fetch("http://localhost:3001/api/v1/users", {
+        // const response = await fetch(
+        //   "https://blog-api-host-iskq.onrender.com/Users",
+        //   {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          userName,
+          email,
+          password,
+          address,
+          city,
+          state,
+          phoneNumber,
+          profilePhoto,
+        }),
+      });
 
       const result = await response.json();
 
@@ -109,7 +155,7 @@ const Signup = () => {
               className="mb-5 sm:w-full md:w-full lg:w-[20rem] lg:h-[3.5rem] bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
               placeholder="Enter your Full Name"
               required
-              onChange={(e) => setUserName(e.target.value)}
+              onChange={handleInputChange}
               name="userName"
             />
           </div>
@@ -127,7 +173,7 @@ const Signup = () => {
               className="mb-5 sm:w-full md:w-full lg:w-[20rem] lg:h-[3.5rem] bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
               placeholder="name@example.com"
               required
-              onChange={(e) => setEmail(e.target.value)}
+              onChange={handleInputChange}
               name="email"
             />
           </div>
@@ -147,7 +193,7 @@ const Signup = () => {
               className="mb-5 sm:w-full md:w-full lg:w-[20rem] lg:h-[3.5rem] bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
               placeholder="Address"
               required
-              onChange={(e) => setAddress(e.target.value)}
+              onChange={handleInputChange}
               name="address"
             />
           </div>
@@ -163,7 +209,7 @@ const Signup = () => {
               id="city"
               className="mb-5 sm:w-full md:w-full lg:w-[20rem] lg:h-[3.5rem] bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
               required
-              onChange={(e) => setCity(e.target.value)}
+              onChange={handleInputChange}
               name="city"
             >
               <option value="" disabled selected>
@@ -193,7 +239,7 @@ const Signup = () => {
               className="mb-5 sm:w-full md:w-full lg:w-[20rem] lg:h-[3.5rem] bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
               placeholder="State"
               required
-              onChange={(e) => setState(e.target.value)}
+              onChange={handleInputChange}
               name="state"
             />
           </div>
@@ -211,7 +257,7 @@ const Signup = () => {
               className="mb-5 sm:w-full md:w-full lg:w-[20rem] lg:h-[3.5rem] bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
               placeholder="Phone Number"
               required
-              onChange={(e) => setPhoneNumber(e.target.value)}
+              onChange={handleInputChange}
               name="phoneNumber"
             />
           </div>
@@ -230,7 +276,7 @@ const Signup = () => {
               id="password"
               className="sm:w-full md:w-full lg:w-[20rem] lg:h-[3.5rem] bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
               required
-              onChange={(e) => setPassword(e.target.value)}
+              onChange={handleInputChange}
               name="password"
             />
           </div>
@@ -246,7 +292,7 @@ const Signup = () => {
               id="confirm-password"
               className="sm:w-full md:w-full lg:w-[20rem] lg:h-[3.5rem] bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
               required
-              onChange={(e) => setConfirmPassword(e.target.value)}
+              onChange={handleInputChange}
               name="confirm-password"
             />
           </div>
@@ -265,8 +311,16 @@ const Signup = () => {
             id="profileImage"
             // value={}
             className="text-white sm:w-full md:w-full lg:w-[20rem] lg:h-[3.5rem] bg-gray-50 border border-gray-300 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+            // onDone={({ base64 }) => {
+            //   setProfilePhoto(base64);
+            // }}
             onDone={({ base64 }) => {
-              setProfilePhoto(base64);
+              handleInputChange({
+                target: {
+                  name: "profilePhoto",
+                  value: base64,
+                },
+              });
             }}
           />
         </div>

@@ -31,17 +31,16 @@ export const AuthProvider = ({ children }) => {
     e.preventDefault();
 
     try {
-      // const response = await fetch("http://localhost:3001/login", {
-      const response = await fetch(
-        "https://blog-api-host-iskq.onrender.com/login",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({ email, password }),
-        }
-      );
+      const response = await fetch("http://localhost:3001/login", {
+        // const response = await fetch(
+        //   "https://blog-api-host-iskq.onrender.com/login",
+        //   {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ email, password }),
+      });
 
       if (!response.ok) {
         throw new Error(`HTTP error! Status: ${response.status}`);
@@ -77,8 +76,8 @@ export const AuthProvider = ({ children }) => {
   const fetchUserData = async (userId) => {
     try {
       const response = await fetch(
-        // `http://localhost:3001/api/v1/users/${userId}`
-        `https://blog-api-host-iskq.onrender.com/api/v1/users/${userId}`
+        `http://localhost:3001/api/v1/users/${userId}`
+        // `https://blog-api-host-iskq.onrender.com/api/v1/users/${userId}`
       );
       const result = await response.json();
 

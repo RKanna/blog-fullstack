@@ -7,16 +7,16 @@ const blogReducer = (state, action) => {
       return action.payload.data;
 
     case "CREATE_BLOG":
-      // axios.post("http://localhost:3001/api/v1/blogs", action.payload);
-      axios.post(
-        "https://blog-api-host-iskq.onrender.com/api/v1/blogs",
-        action.payload
-      );
+      axios.post("http://localhost:3001/api/v1/blogs", action.payload);
+      // axios.post(
+      //   "https://blog-api-host-iskq.onrender.com/api/v1/blogs",
+      //   action.payload
+      // );
       // Fetch the updated list of blogs from the server
-      // axios.get("http://localhost:3001/api/v1/blogs").then((res) => {
-      axios
-        .get("https://blog-api-host-iskq.onrender.com/api/v1/blogs")
-        .then((res) => {
+      axios.get("http://localhost:3001/api/v1/blogs").then((res) => {
+      // axios
+      //   .get("https://blog-api-host-iskq.onrender.com/api/v1/blogs")
+      //   .then((res) => {
           dispatch({ type: "FETCH_INIT", payload: res.data });
         });
 
@@ -24,18 +24,18 @@ const blogReducer = (state, action) => {
 
     case "UPDATE_BLOG":
       axios.put(
-        // `http://localhost:3001/api/v1/blogs/${action.payload._id}`,
-        `https://blog-api-host-iskq.onrender.com/api/v1/blogs/${action.payload._id}`,
+        `http://localhost:3001/api/v1/blogs/${action.payload._id}`,
+        // `https://blog-api-host-iskq.onrender.com/api/v1/blogs/${action.payload._id}`,
         action.payload
       );
       return state.map((blog) =>
         blog._id === action.payload._id ? action.payload : blog
       );
     case "DELETE_BLOG":
-      // axios.delete(`http://localhost:3001/api/v1/blogs/${action.payload}`);
-      axios.delete(
-        `https://blog-api-host-iskq.onrender.com/api/v1/blogs/${action.payload}`
-      );
+      axios.delete(`http://localhost:3001/api/v1/blogs/${action.payload}`);
+      // axios.delete(
+      //   `https://blog-api-host-iskq.onrender.com/api/v1/blogs/${action.payload}`
+      // );
       return state.filter((blog) => blog._id !== action.payload);
 
     case "ADD_COMMENT":
