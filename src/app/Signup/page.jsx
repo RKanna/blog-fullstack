@@ -91,7 +91,7 @@ const Signup = () => {
     try {
       // const response = await fetch("http://localhost:3001/api/v1/users", {
       const response = await fetch(
-        "https://blog-api-host-iskq.onrender.com/Users",
+        "https://blog-api-host-iskq.onrender.com/api/v1/users",
         {
           method: "POST",
           headers: {
