@@ -7,12 +7,12 @@ const Blog = createContext();
 const BlogContext = ({ children }) => {
   const [state, dispatch] = useReducer(blogReducer, []);
   useEffect(() => {
-    axios.get("http://localhost:3001/api/v1/blogs").then((res) => {
-      // axios
-      //   .get("https://blog-api-host-iskq.onrender.com/api/v1/blogs")
-      //   .then((res) => {
-      dispatch({ type: "FETCH_INIT", payload: res.data });
-    });
+    // axios.get("http://localhost:3001/api/v1/blogs").then((res) => {
+    axios
+      .get("https://blog-api-host-iskq.onrender.com/api/v1/blogs")
+      .then((res) => {
+        dispatch({ type: "FETCH_INIT", payload: res.data });
+      });
   }, []);
 
   return <Blog.Provider value={{ state, dispatch }}>{children}</Blog.Provider>;

@@ -89,25 +89,26 @@ const Signup = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await fetch("http://localhost:3001/api/v1/users", {
-        // const response = await fetch(
-        //   "https://blog-api-host-iskq.onrender.com/Users",
-        //   {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          userName,
-          email,
-          password,
-          address,
-          city,
-          state,
-          phoneNumber,
-          profilePhoto,
-        }),
-      });
+      // const response = await fetch("http://localhost:3001/api/v1/users", {
+      const response = await fetch(
+        "https://blog-api-host-iskq.onrender.com/Users",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            userName,
+            email,
+            password,
+            address,
+            city,
+            state,
+            phoneNumber,
+            profilePhoto,
+          }),
+        }
+      );
 
       const result = await response.json();
 
