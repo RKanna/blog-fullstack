@@ -41,7 +41,7 @@ const Footer = () => {
         </a>
       </div>
       <div className="test w-full h-[3rem] bg-blue-700 flex items-center justify-center">
-        <h1>{fullYear}</h1>
+        <h1>BlogShine &#169;{fullYear}</h1>
       </div>
     </section>
   );
