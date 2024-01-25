@@ -100,11 +100,11 @@ const CreateBlog = () => {
   return (
     <section className="mx-auto lg:w-3/4">
       <form action="" className="p-5">
-        <h1 className="mb-3 text-2xl text-center">Create Blog</h1>
+        <h1 className="mb-3 text-2xl text-center text-white">Create Blog</h1>
         <div className="mb-5">
           <label
             htmlFor="title"
-            className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-900"
+            className="block mb-2 text-sm font-medium text-white dark:text-white"
           >
             Title
           </label>
@@ -123,7 +123,7 @@ const CreateBlog = () => {
         <div className="mb-5">
           <label
             htmlFor="content"
-            className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-900"
+            className="block mb-2 text-sm font-medium text-white dark:text-white"
           >
             Content
           </label>
@@ -144,7 +144,7 @@ const CreateBlog = () => {
         <div className="mb-5">
           <label
             htmlFor="author"
-            className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-900"
+            className="block mb-2 text-sm font-medium text-white dark:text-white"
           >
             Author
           </label>
@@ -165,7 +165,7 @@ const CreateBlog = () => {
         <div className="mb-5">
           <label
             htmlFor="tags"
-            className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-900"
+            className="block mb-2 text-sm font-medium text-white dark:text-white"
           >
             Tags
           </label>
@@ -185,7 +185,7 @@ const CreateBlog = () => {
         <div className="mb-5">
           <label
             htmlFor="cover-image"
-            className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-900"
+            className="block mb-2 text-sm font-medium text-white dark:text-white"
           >
             Cover Image
           </label>
