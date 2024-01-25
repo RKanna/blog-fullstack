@@ -30,26 +30,35 @@ const Header = () => {
           >
             Explore
           </Link>
-          <Link
-            className="p-2 text-white bg-black rounded-3xl"
-            href="/Createblog"
-            as="/Createblog"
-          >
-            <div className="flex items-center gap-2">
-              <ImPen />
-              Write
-            </div>
-          </Link>
-          <Link
-            className="p-2 text-white bg-black rounded-3xl"
-            href="/Profile"
-            as="/Profile"
-          >
-            <div className="flex items-center gap-2">
-              <CgProfile />
-              Profile
-            </div>
-          </Link>
+          {userId ? (
+            <Link
+              className="p-2 text-white bg-black rounded-3xl"
+              href="/Createblog"
+              as="/Createblog"
+            >
+              <div className="flex items-center gap-2">
+                <ImPen />
+                Write
+              </div>
+            </Link>
+          ) : (
+            ""
+          )}
+
+          {userId ? (
+            <Link
+              className="p-2 text-white bg-black rounded-3xl"
+              href="/Profile"
+              as="/Profile"
+            >
+              <div className="flex items-center gap-2">
+                <CgProfile />
+                Profile
+              </div>
+            </Link>
+          ) : (
+            ""
+          )}
           {userId ? (
             <Link
               className="p-2 text-white bg-red-500 rounded-3xl"

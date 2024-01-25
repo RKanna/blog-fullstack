@@ -4,6 +4,7 @@ import { useSearchParams } from "next/navigation";
 import { getBlogByID } from "../../request.js";
 import { BlogState } from "../../Context/BlogContext.jsx";
 import FileBase64 from "react-file-base64";
+import { useRouter } from "next/navigation";
 
 const Update = () => {
   const searchParams = useSearchParams();
@@ -37,6 +38,8 @@ const Update = () => {
 
   const { dispatch } = BlogState();
 
+  const router = useRouter();
+
   const handleUpdate = async (e) => {
     e.preventDefault();
     try {
@@ -52,7 +55,7 @@ const Update = () => {
       await dispatch({ type: "UPDATE_BLOG", payload: updatedBlog });
 
       window.alert("Updated successfully");
-      // router.push("/Explore");
+      router.push("/Explore");
     } catch (error) {
       console.error("Error updating blog:", error);
       window.alert("Failed to update the blog post");

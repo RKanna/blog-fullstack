@@ -18,7 +18,7 @@ const DetailedBlog = () => {
   const [specificBlog, setSpecificBlog] = useState(null);
   const [comments, setComments] = useState([]);
   const [newComment, setNewComment] = useState("");
-  const { userName } = useAuthContext();
+  const { userName, fetchUserData } = useAuthContext();
 
   useEffect(() => {
     const fetchBlog = async () => {
@@ -55,13 +55,15 @@ const DetailedBlog = () => {
     return storedUserId === specificBlog?.data?.userId;
   };
 
+  //fixing userName
+
   // Function to add a new comment
   const handleAddComment = async () => {
     try {
       const userId = localStorage.getItem("userId");
 
       if (!userId) {
-        window.alert("User ID is missing");
+        window.alert("Please Sign in to write comments");
         return;
       }
 
@@ -111,6 +113,8 @@ const DetailedBlog = () => {
       window.alert("Failed to add the comment");
     }
   };
+
+  //////////////////////////////////////////
 
   //For updating the comments
 

@@ -12,19 +12,15 @@ export const AuthProvider = ({ children }) => {
   const [userEmail, setUserEmail] = useState();
   const [encryptedPassword, setEncryptedPassword] = useState();
   const [userId, setUserId] = useState();
+
+  //create user
+  const [address, setAddress] = useState([]);
+  const [city, setCity] = useState();
+  const [state, setState] = useState();
+  const [phoneNumber, setPhoneNumber] = useState();
+  const [profilePhoto, setProfilePhoto] = useState();
+
   const router = useRouter();
-
-  // useEffect(() => {
-  //   const storedUserEmail = localStorage.getItem("userEmail");
-  //   if (storedUserEmail) {
-  //     setUserEmail(storedUserEmail);
-  //   }
-  // }, []);
-
-  // const updateUserEmail = (newEmail) => {
-  //   localStorage.setItem("userEmail", newEmail);
-  //   setUserEmail(newEmail);
-  // };
 
   const updateUser = (userId, newEmail) => {
     localStorage.setItem("userId", userId);
@@ -77,8 +73,8 @@ export const AuthProvider = ({ children }) => {
     toast("Logout Done");
   };
 
-  //for getting UserName using UserId
-  const fetchUserName = async (userId) => {
+  //for getting user details for Profile information using UserId
+  const fetchUserData = async (userId) => {
     try {
       const response = await fetch(
         // `http://localhost:3001/api/v1/users/${userId}`
@@ -87,17 +83,37 @@ export const AuthProvider = ({ children }) => {
       const result = await response.json();
 
       if (result.success) {
-        const { userName } = result.data;
+        const {
+          userName,
+          profilePhoto,
+          email,
+          address,
+          city,
+          state,
+          phoneNumber,
+        } = result.data;
         setUserName(userName);
+        setProfilePhoto(profilePhoto);
+        setEmail(email);
+        setAddress(address);
+        setCity(city);
+        setState(state);
+        setPhoneNumber(phoneNumber);
         console.log("User Name:", userName);
+        console.log("Profile Photo:", profilePhoto);
       } else {
-        console.error("Error fetching user:", result.message);
+        console.error("Error fetching user data:", result.message);
       }
     } catch (error) {
-      // console.error("Fetch error:", error);
+      console.error("Fetch error:", error);
     }
   };
-  fetchUserName(userId);
+
+  useEffect(() => {
+    if (userId) {
+      fetchUserData(userId);
+    }
+  }, [userId]);
 
   return (
     <AuthContext.Provider
@@ -118,8 +134,19 @@ export const AuthProvider = ({ children }) => {
         handleSignIn,
         userId,
         setUserId,
-        fetchUserName,
+        // fetchUserName,
+        fetchUserData,
         userName,
+        setAddress,
+        setCity,
+        setState,
+        setPhoneNumber,
+        setProfilePhoto,
+        address,
+        state,
+        city,
+        phoneNumber,
+        profilePhoto,
       }}
     >
       {children}

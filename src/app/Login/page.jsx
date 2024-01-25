@@ -25,11 +25,11 @@ const Login = () => {
       style={{ minHeight: "calc(100vh - 11rem)" }}
     >
       <form className="max-w-sm mx-auto" onSubmit={handleSignIn}>
-        <h1 className="mb-6 text-2xl text-center">Sign In</h1>
+        <h1 className="mb-6 text-2xl text-center text-white">Sign In</h1>
         <div className="mb-5 ">
           <label
             htmlFor="email"
-            className="block mb-2 text-sm text-gray-900 lg:font-medium dark:text-gray-900 lg:text-xl"
+            className="block mb-2 text-sm text-white lg:font-medium dark:text-white lg:text-xl"
           >
             Email
           </label>
@@ -46,7 +46,7 @@ const Login = () => {
         <div className="mb-5">
           <label
             htmlFor="password"
-            className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-900 lg:text-xl"
+            className="block mb-2 text-sm font-medium text-white dark:text-white lg:text-xl"
           >
             Password
           </label>
@@ -84,7 +84,7 @@ const Login = () => {
           >
             Submit
           </button>
-          <Link className="pt-2 lg:text-xl" href="Signup">
+          <Link className="pt-2 text-white lg:text-xl" href="Signup">
             Create a Account
           </Link>
         </div>

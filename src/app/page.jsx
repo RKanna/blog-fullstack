@@ -12,7 +12,7 @@ const Home = () => {
 
   return (
     <section className="min-h-screen p-5 ">
-      <h2 className="text-4xl text-center text-white">Recent Blog List</h2>
+      <h2 className="text-4xl text-center text-white">Blog List</h2>
       <ul className="flex flex-col items-center justify-center mx-auto sm:w-3/4 md:w-3/4 lg:w-3/4">
         <div className="flex flex-col">
           {sortedBlogs.map((blog) => (

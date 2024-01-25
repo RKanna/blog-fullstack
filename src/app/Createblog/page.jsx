@@ -6,24 +6,31 @@ import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { useAuthContext } from "../Context/AuthContext";
 import { getProfileIdFromLocalStorage } from "./LocalStorageGet";
+import axios from "axios";
 
 const CreateBlog = () => {
   const router = useRouter();
 
   const [profileId, setProfileId] = useState("");
 
-  const { userName } = useAuthContext();
+  const { userName, fetchUserData, userId } = useAuthContext();
+  console.log("userName:", userName);
 
-  // useEffect(() => {
-  //   const getProfileId = localStorage.getItem("userId");
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        await fetchUserData(userId);
+        setCreatePost((prevPost) => ({
+          ...prevPost,
+          author: userName,
+        }));
+      } catch (error) {
+        console.error("Error fetching user data:", error);
+      }
+    };
 
-  //   setProfileId(getProfileId);
-  //   if (getProfileId) {
-  //     router.push("/Createblog");
-  //   } else {
-  //     router.push("/");
-  //   }
-  // }, []);
+    fetchData();
+  }, []);
 
   useEffect(() => {
     const getProfileId = getProfileIdFromLocalStorage();
@@ -51,26 +58,6 @@ const CreateBlog = () => {
 
   const { dispatch } = BlogState();
 
-  // const handleSubmit = async (e) => {
-  //   e.preventDefault();
-
-  //   try {
-  //     const userId = localStorage.getItem("userId");
-  //     setCreatePost({
-  //       ...createPost,
-  //       userId: userId,
-  //     });
-
-  //     console.log(createPost);
-  //     await dispatch({ type: "CREATE_BLOG", payload: createPost });
-  //     window.alert("Post created successfully");
-  //     window.location.href = "/";
-  //   } catch (error) {
-  //     console.error("Error creating blog:", error);
-  //     window.alert("Failed to create the blog post");
-  //   }
-  // };
-
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -83,9 +70,26 @@ const CreateBlog = () => {
         });
 
         console.log(createPost);
-        await dispatch({ type: "CREATE_BLOG", payload: createPost });
+
+        // First, send a request to create the new blog post
+        await axios.post(
+          "https://blog-api-host-iskq.onrender.com/api/v1/blogs",
+          // "http://localhost:3001/api/v1/blogs",
+          createPost
+        );
+
+        // After successfully creating the blog post, fetch the updated list of blogs
+        const response = await axios.get(
+          "https://blog-api-host-iskq.onrender.com/api/v1/blogs"
+          // "http://localhost:3001/api/v1/blogs"
+        );
+
+        // Dispatch the updated list of blogs to the context
+        dispatch({ type: "FETCH_INIT", payload: response.data });
+
+        // Redirect to the home page
         window.alert("Post created successfully");
-        router.push("/"); // Use router.push instead of window.location.href
+        router.push("/");
       }
     } catch (error) {
       console.error("Error creating blog:", error);
@@ -150,10 +154,6 @@ const CreateBlog = () => {
             id="author"
             className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 lg:text-2xl"
             placeholder="Author"
-            // onChange={(e) =>
-            //   setCreatePost({ ...createPost, author: e.target.value })
-            // }
-            // value={createPost.author}
             onChange={(e) =>
               setCreatePost({
                 ...createPost,
@@ -202,57 +202,6 @@ const CreateBlog = () => {
             }}
           />
         </div>
-
-        {/* <div className="mb-5">
-          <label
-            htmlFor="likes"
-            className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-900"
-          >
-            Likes
-          </label>
-          <input
-            type="number"
-            id="likes"
-            className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white h-[5rem] dark:focus:ring-blue-500 dark:focus:border-blue-500 lg:text-2xl"
-            placeholder="likes"
-            onChange={(e) =>
-              setCreatePost({ ...createPost, likes: +e.target.value })
-            }
-            value={createPost.likes}
-            name="tags"
-            // required
-          />
-        </div> */}
-        {/* <div className="mb-5">
-          <label
-            htmlFor="comments"
-            className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-900"
-          >
-            Comments
-          </label>
-
-          <textarea
-            name="comments"
-            id="comments"
-            cols="30"
-            rows="10"
-            className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white h-[5rem] dark:focus:ring-blue-500 dark:focus:border-blue-500 lg:text-2xl"
-            placeholder="comments"
-            value={createPost.comments[0]?.text || ""}
-            onChange={(e) =>
-              setCreatePost({
-                ...createPost,
-                comments: [
-                  {
-                    text: e.target.value,
-                    author: createPost.author,
-                    date: new Date().toISOString(),
-                  },
-                ],
-              })
-            }
-          ></textarea>
-        </div> */}
 
         <button
           type="submit"

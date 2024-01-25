@@ -5,13 +5,24 @@ const blogReducer = (state, action) => {
     case "FETCH_INIT":
       // console.log(action);
       return action.payload.data;
+
     case "CREATE_BLOG":
+      // Add the new blog to the server
       // axios.post("http://localhost:3001/api/v1/blogs", action.payload);
       axios.post(
         "https://blog-api-host-iskq.onrender.com/api/v1/blogs",
         action.payload
       );
-      return [...state, action.payload];
+      // Fetch the updated list of blogs from the server
+      // axios.get("http://localhost:3001/api/v1/blogs").then((res) => {
+      axios
+        .get("https://blog-api-host-iskq.onrender.com/api/v1/blogs")
+        .then((res) => {
+          dispatch({ type: "FETCH_INIT", payload: res.data });
+        });
+
+      return state;
+
     case "UPDATE_BLOG":
       axios.put(
         // `http://localhost:3001/api/v1/blogs/${action.payload._id}`,
