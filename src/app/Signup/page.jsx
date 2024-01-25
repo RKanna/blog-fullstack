@@ -73,7 +73,6 @@ const Signup = () => {
       } else if (result.message === "Email already exists") {
         window.alert("Email Already in use");
       } else {
-        // Handle other cases if needed
         console.error("Unexpected server response:", result);
       }
     } catch (error) {

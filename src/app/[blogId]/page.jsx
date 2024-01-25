@@ -114,8 +114,6 @@ const DetailedBlog = () => {
     }
   };
 
-  //////////////////////////////////////////
-
   //For updating the comments
 
   const handleUpdateComment = async (commentId, newText) => {
@@ -460,5 +458,3 @@ const DetailedBlog = () => {
 };
 
 export default DetailedBlog;
-
-//////////////////////////////////////////////////////////////////////

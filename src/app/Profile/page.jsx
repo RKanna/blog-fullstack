@@ -88,14 +88,11 @@ const Profile = () => {
       if (response.ok) {
         console.log("Profile updated successfully");
         closeModal();
-        // Fetch updated user data
         fetchUserData(userId);
       } else {
-        // Handle error case
         console.error("Failed to update profile");
       }
     } catch (error) {
-      // Fix: include the error parameter
       console.error("Failed to update profile:", error);
     }
   };

@@ -98,7 +98,6 @@ const CreateBlog = () => {
   };
 
   return (
-    // <section className="w-full min-h-screen mx-auto mt-10 mb-10 sm:w-3/4 md:w-1/2 lg:w-1/2">
     <section className="mx-auto lg:w-3/4">
       <form action="" className="p-5">
         <h1 className="mb-3 text-2xl text-center">Create Blog</h1>

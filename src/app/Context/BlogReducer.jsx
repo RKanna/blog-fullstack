@@ -7,7 +7,6 @@ const blogReducer = (state, action) => {
       return action.payload.data;
 
     case "CREATE_BLOG":
-      // Add the new blog to the server
       // axios.post("http://localhost:3001/api/v1/blogs", action.payload);
       axios.post(
         "https://blog-api-host-iskq.onrender.com/api/v1/blogs",
@@ -80,7 +79,6 @@ const blogReducer = (state, action) => {
           ? { ...blog, likes: action.payload.likes }
           : blog
       );
-    ////////////////////////////////////////////////
 
     default:
       return state;
