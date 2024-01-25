@@ -89,7 +89,13 @@ const Login = () => {
           </Link>
         </div>
 
-        <main></main>
+        <main className="flex justify-center mt-6">
+          <div className="flex flex-col items-center justify-center w-3/4 mt-2 bg-white rounded-xl">
+            <h2>Test Credentials</h2>
+            <p>Email : naveen@gmail.com</p>
+            <p>password : 123456</p>
+          </div>
+        </main>
       </form>
     </section>
   );
